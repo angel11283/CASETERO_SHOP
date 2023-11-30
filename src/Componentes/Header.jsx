@@ -68,7 +68,7 @@ export const Header = ({
                         {product.quantity}
                       </span>
                       <p className='titulo-producto-carrito'>
-                        {product.nameProduct}
+                        {product.name_product}
                       </p>
                       <span className='precio-producto-carrito'>
                         ${product.price}
