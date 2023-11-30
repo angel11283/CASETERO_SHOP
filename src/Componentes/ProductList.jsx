@@ -2,12 +2,27 @@ import React from 'react'
 import { data } from '../Data'
 
 
-export const ProductList = ({ allProducts, setAllProducts }) => {
-  const onAddProduct = () => {
-    console.log("agregado");
+export const ProductList = ({allProducts,setAllProducts,countProducts,setCountProducts,total,setTotal,
+}) => {
+	const onAddProduct = product => {
+		if (allProducts.find(item => item.id === product.id)) {
+			const products = allProducts.map(item =>
+				item.id === product.id
+					? { ...item, quantity: item.quantity + 1 }
+					: item
+			);
+			setTotal(total + product.price * product.quantity);
+			setCountProducts(countProducts + product.quantity);
+			return setAllProducts([...products]);
+		}
+
+		setTotal(total + product.price * product.quantity);
+		setCountProducts(countProducts + product.quantity);
+		setAllProducts([...allProducts, product]);
   }
+  console.log(allProducts)
   return (
-    <div className=''>
+    <div className='container-items'>
       {data.map(product => (
         <div className='item' key={product.id}>
           <figure>
@@ -20,7 +35,7 @@ export const ProductList = ({ allProducts, setAllProducts }) => {
           <div className="info-product">
             <h2>{product.name_product}</h2>
             <p className="price">${product.price}</p>
-            <button onClick={() => onAddProduct()} className="button">Añadir al carrito</button>
+            <button onClick={() => onAddProduct(product)} className="button">Añadir al carrito</button>
           </div>
         </div>
       ))}
